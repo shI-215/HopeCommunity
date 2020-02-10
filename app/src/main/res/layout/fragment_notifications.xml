@@ -11,10 +11,10 @@
 
         <ImageView
             android:id="@+id/image_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentLeft="true"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/background" />
 
         <TextView
             android:id="@+id/text_user"
@@ -59,4 +59,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp" />
+
+    <com.hello.hopecommunity.layout.ClickPoint
+        android:id="@+id/click_loginout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
 </LinearLayout>
