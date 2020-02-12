@@ -15,6 +15,8 @@ import com.hello.hopecommunity.R;
 import com.hello.hopecommunity.activity.LoginActivity;
 import com.hello.hopecommunity.activity.PersonalActivity;
 import com.hello.hopecommunity.activity.UpdateInfoActivity;
+import com.hello.hopecommunity.activity.UpdatePasswordActivity;
+import com.hello.hopecommunity.activity.UpdatePhoneActivity;
 import com.hello.hopecommunity.layout.ClickPoint;
 
 public class NotificationsFragment extends Fragment implements View.OnClickListener {
@@ -42,6 +44,12 @@ public class NotificationsFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.click_two:
                 startActivity(new Intent(getContext(), UpdateInfoActivity.class));
+                break;
+            case R.id.click_three:
+                startActivity(new Intent(getContext(), UpdatePhoneActivity.class));
+                break;
+            case R.id.click_four:
+                startActivity(new Intent(getContext(), UpdatePasswordActivity.class));
                 break;
             case R.id.text_user:
                 startActivity(new Intent(getContext(), LoginActivity.class));

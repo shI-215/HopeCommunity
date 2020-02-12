@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hello.hopecommunity">
-    <!-- if you want to load images from the internet -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- if you want to load images from a file OR from the internet -->
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name=".App"
@@ -23,8 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.UpdateInfoActivity"></activity>
+        <activity android:name=".activity.DetailsActivity"></activity>
+        <activity
+            android:name=".activity.UpdatePasswordActivity"
+            android:label="密码修改" />
+        <activity
+            android:name=".activity.UpdatePhoneActivity"
+            android:label="手机修改" />
+        <activity
+            android:name=".activity.UpdateInfoActivity"
+            android:label="信息修改" />
         <activity android:name=".activity.MyActivity" />
         <activity
             android:name=".activity.LoginActivity"
@@ -44,64 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="android.max_aspect"
-            android:value="2.1" />
-
-        <activity
-            android:name="zuo.biao.library.ui.SelectPictureActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/WindowCompleteAlpha"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name="zuo.biao.library.ui.CutPictureActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Window"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name="zuo.biao.library.ui.WebViewActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize|adjustUnspecified" />
-        <activity
-            android:name="zuo.biao.library.ui.EditTextInfoActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan|adjustUnspecified" />
-        <activity
-            android:name="zuo.biao.library.ui.ServerSettingActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="zuo.biao.library.ui.TopMenuWindow"
-            android:screenOrientation="portrait"
-            android:theme="@style/Window"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name="zuo.biao.library.ui.BottomMenuWindow"
-            android:screenOrientation="portrait"
-            android:theme="@style/Window"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name="zuo.biao.library.ui.EditTextInfoWindow"
-            android:screenOrientation="portrait"
-            android:theme="@style/Window"
-            android:windowSoftInputMode="stateVisible|adjustResize|adjustUnspecified" />
-        <activity
-            android:name="zuo.biao.library.ui.PlacePickerWindow"
-            android:screenOrientation="portrait"
-            android:theme="@style/Window"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name="zuo.biao.library.ui.DatePickerWindow"
-            android:screenOrientation="portrait"
-            android:theme="@style/Window"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name="zuo.biao.library.ui.TimePickerWindow"
-            android:screenOrientation="portrait"
-            android:theme="@style/Window"
-            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>
