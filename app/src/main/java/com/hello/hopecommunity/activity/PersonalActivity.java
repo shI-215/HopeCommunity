@@ -1,9 +1,12 @@
 package com.hello.hopecommunity.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +21,7 @@ import java.util.List;
 
 public class PersonalActivity extends AppCompatActivity implements View.OnClickListener {
     private RecycleAdapter recycleAdapter;
+    private Context context;
 
     private List<String> list;
     private ImageView image_background;
@@ -30,20 +34,6 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
-        setStatusBarTransparent();
-        initView();
-        initData();
-        recycleAdapter = new RecycleAdapter(list);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL);
-        recycler_view.setLayoutManager(staggeredGridLayoutManager);
-        recycler_view.setAdapter(recycleAdapter);
-    }
-
-    /**
-     * 设置透明状态栏
-     */
-    private void setStatusBarTransparent() {
         AppBarLayout appBarLayout = findViewById(R.id.appBar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -56,6 +46,9 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         });
+        context = this;
+        initView();
+        initData();
     }
 
     private void initView() {
@@ -73,6 +66,28 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
         for (int i = 0; i < 10; i++) {
             list.add(i + "人");
         }
+        recycleAdapter = new RecycleAdapter(list);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
+        recycler_view.setLayoutManager(staggeredGridLayoutManager);
+        recycler_view.setAdapter(recycleAdapter);
+
+        recycleAdapter.setOnItemClickListener(new RecycleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, RecycleAdapter.ViewName viewName, int position) {
+                switch (v.getId()) {
+                    case R.id.card_image_item:
+                        Toast.makeText(context, (position + 1) + "", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(context, DetailsActivity.class));
+                        break;
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View v) {
+
+            }
+        });
     }
 
     @Override
