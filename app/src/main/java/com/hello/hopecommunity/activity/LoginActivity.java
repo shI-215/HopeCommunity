@@ -15,11 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hello.hopecommunity.MainActivity;
 import com.hello.hopecommunity.R;
+import com.hello.hopecommunity.bean.User;
+import com.hello.hopecommunity.model.UserModel;
+import com.hello.hopecommunity.ui.MyListener;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, MyListener {
 
     private Context context;
+    private UserModel userModel;
 
     private EditText edt_phone;
     private EditText edt_password;
@@ -38,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         initView();
         context = this;
+        userModel = new UserModel(context);
     }
 
     private void initView() {
@@ -67,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.btn_login:
-                finish();
+                submit();
                 break;
         }
     }
@@ -76,19 +82,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // validate
         String phone = edt_phone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            Toast.makeText(this, "手机号码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String password = edt_password.getText().toString().trim();
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "密码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // TODO validate success, do something
-
-
+        User user = new User();
+        user.setUserTel(phone);
+        user.setUserPwd(password);
+        userModel.login(user, this);
     }
 
     @Override
@@ -99,5 +107,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess(Object object) {
+        MainActivity.activity.finish();
+        finish();
+        startActivity(new Intent(context, MainActivity.class));
+    }
+
+    @Override
+    public void onFaile(Object object) {
+        Toast.makeText(context, object.toString(), Toast.LENGTH_LONG).show();
     }
 }

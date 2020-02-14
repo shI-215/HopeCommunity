@@ -2,6 +2,7 @@ package com.hello.hopecommunity.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.hello.hopecommunity.App;
 import com.hello.hopecommunity.R;
 import com.hello.hopecommunity.adapter.RecycleAdapter;
 
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalActivity extends AppCompatActivity implements View.OnClickListener {
+    private SharedPreferences preferences = App.context.getSharedPreferences(App.SHARED_PREFERENCES_NAME, App.context.MODE_PRIVATE);
+    private int userId = preferences.getInt("userId", 0);
+    private String userName = preferences.getString("userName", "Hope");
     private RecycleAdapter recycleAdapter;
     private Context context;
 
@@ -55,6 +60,7 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
         image_background = (ImageView) findViewById(R.id.image_background);
         btn_back = (ImageView) findViewById(R.id.btn_back);
         text_user = (TextView) findViewById(R.id.text_user);
+        text_user.setText(userName);
         recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
         image_user = (ImageView) findViewById(R.id.image_user);
 

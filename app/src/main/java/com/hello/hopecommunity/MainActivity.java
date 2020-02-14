@@ -1,8 +1,8 @@
 package com.hello.hopecommunity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.text.TextUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -10,12 +10,30 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.hello.hopecommunity.bean.User;
+import com.hello.hopecommunity.model.UserModel;
+import com.hello.hopecommunity.ui.MyListener;
+
+public class MainActivity extends AppCompatActivity implements MyListener{
+    private SharedPreferences preferences = App.context.getSharedPreferences(App.SHARED_PREFERENCES_NAME, App.context.MODE_PRIVATE);
+    private String userTel = preferences.getString("userTel", "");
+    private String userPwd = preferences.getString("userPwd", "");
+    private UserModel userModel;
+    public static AppCompatActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userModel = new UserModel(this);
+        if (TextUtils.isEmpty(userTel)) {
+            User user = new User();
+            user.setUserTel(userTel);
+            user.setUserPwd(userPwd);
+            userModel.login(user, this);
+        }
+        activity = this;
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -27,4 +45,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    @Override
+    public void onSuccess(Object object) {
+
+    }
+
+    @Override
+    public void onFaile(Object object) {
+
+    }
 }

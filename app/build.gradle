@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 29
@@ -44,4 +45,17 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     //city
     implementation 'liji.library.dev:citypickerview:0.7.0'
+    //pkhttputil
+    implementation 'com.zhy:okhttputils:2.6.2'
+    //Okhttp3
+    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
+    implementation 'com.squareup.okio:okio:2.4.3'
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+}
+
+MobSDK {
+    appKey "2e0a7e12e4c00"
+    appSecret "64fdf0cf48ce90a9048dcd5391b649de"
+    SMSSDK {}
 }
