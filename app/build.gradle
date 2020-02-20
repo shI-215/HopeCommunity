@@ -53,6 +53,8 @@ dependencies {
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation files('libs/BaiduLBS_Android.jar')
+    //图片选择
+    implementation 'com.jaikydota.imagespickers:imagespickers:1.0.6'
 }
 
 MobSDK {

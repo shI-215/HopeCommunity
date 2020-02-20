@@ -9,11 +9,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,22 +32,27 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.BaiduMap;
-import com.hello.hopecommunity.MainActivity;
 import com.hello.hopecommunity.R;
+import com.hello.hopecommunity.util.GlideLoader;
+import com.jaiky.imagespickers.ImageConfig;
+import com.jaiky.imagespickers.ImageSelector;
+import com.jaiky.imagespickers.ImageSelectorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReleaseActivity extends AppCompatActivity {
+public class ReleaseActivity extends AppCompatActivity implements View.OnClickListener {
     private LocationClient mLocationClient;
-    private BaiduMap baiduMap;
-    private boolean isFirstLocate = true;
 
-    private ImageView image_cover;
+    private ArrayList<String> path = new ArrayList<>();
+    public static final int REQUEST_CODE = 123;
+    private ImageConfig imageConfig;
+
+    private LinearLayout ll_cover;
     private EditText edt_title;
     private EditText edt_describe;
     private TextView text_GPS;
+    private LinearLayout ll_prove;
     private ImageView image_prove;
 
     @Override
@@ -102,6 +110,57 @@ public class ReleaseActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_cover:
+                getCover();
+                break;
+            case R.id.ll_prove:
+                getProve();
+                break;
+        }
+    }
+
+    private void getCover() {
+        imageConfig = new ImageConfig.Builder(new GlideLoader())
+                .steepToolBarColor(getResources().getColor(R.color.red))
+                .titleBgColor(getResources().getColor(R.color.red))
+                .titleSubmitTextColor(getResources().getColor(R.color.white))
+                .titleTextColor(getResources().getColor(R.color.white))
+                .singleSelect()      // 开启单选   （默认为多选）
+//                .crop(1, 1, 500, 500)        // 裁剪 (只有单选可裁剪)
+                .showCamera()        // 开启拍照功能 （默认关闭）
+                .setContainer(ll_cover, 1, true)    // 设置显示容器和删除按钮
+                .requestCode(REQUEST_CODE)
+                .build();
+        ImageSelector.open(ReleaseActivity.this, imageConfig);
+    }
+
+    private void getProve() {
+        imageConfig = new ImageConfig.Builder(new GlideLoader())
+                .steepToolBarColor(getResources().getColor(R.color.red))
+                .titleBgColor(getResources().getColor(R.color.red))
+                .titleSubmitTextColor(getResources().getColor(R.color.white))
+                .titleTextColor(getResources().getColor(R.color.white))
+                .showCamera()        // 开启拍照功能 （默认关闭）
+                .setContainer(ll_prove, 2, true)    // 设置显示容器和删除按钮
+                .requestCode(REQUEST_CODE)
+                .build();
+        ImageSelector.open(ReleaseActivity.this, imageConfig);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            List<String> pathList = data.getStringArrayListExtra(ImageSelectorActivity.EXTRA_RESULT);
+            Log.v("picyure", pathList.toString());
+            path.clear();
+            path.addAll(pathList);
+        }
+    }
+
     public class MyLocationListener implements BDLocationListener {
 
         @Override
@@ -129,12 +188,12 @@ public class ReleaseActivity extends AppCompatActivity {
 
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         // 判断GPS模块是否开启，如果没有则开启
-        if (!locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Toast.makeText(ReleaseActivity.this, "请打开GPS", Toast.LENGTH_SHORT).show();
             final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setTitle("请打开GPS连接");
             dialog.setMessage("为方便获取您的位置信息，请先打开GPS");
-            dialog.setPositiveButton("设置", new android.content.DialogInterface.OnClickListener() {
+            dialog.setPositiveButton("设置", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
                     // 转到手机设置界面，用户设置GPS
@@ -143,7 +202,7 @@ public class ReleaseActivity extends AppCompatActivity {
                     startActivityForResult(intent, 0); // 设置完成后返回到原来的界面
                 }
             });
-            dialog.setNeutralButton("取消", new android.content.DialogInterface.OnClickListener() {
+            dialog.setNeutralButton("取消", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
                     arg0.dismiss();
@@ -154,7 +213,8 @@ public class ReleaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case 1:
@@ -176,10 +236,13 @@ public class ReleaseActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        image_cover = (ImageView) findViewById(R.id.image_cover);
+        ll_cover = (LinearLayout) findViewById(R.id.ll_cover);
+        ll_cover.setOnClickListener(this);
         edt_title = (EditText) findViewById(R.id.edt_title);
         edt_describe = (EditText) findViewById(R.id.edt_describe);
         text_GPS = (TextView) findViewById(R.id.text_GPS);
+        ll_prove = (LinearLayout) findViewById(R.id.ll_prove);
+        ll_prove.setOnClickListener(this);
         image_prove = (ImageView) findViewById(R.id.image_prove);
 
         List<String> permissionList = new ArrayList<>();
