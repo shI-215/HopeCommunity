@@ -3,6 +3,7 @@ package com.hello.hopecommunity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -15,7 +16,7 @@ import com.hello.hopecommunity.bean.User;
 import com.hello.hopecommunity.model.UserModel;
 import com.hello.hopecommunity.ui.MyListener;
 
-public class MainActivity extends AppCompatActivity implements MyListener{
+public class MainActivity extends AppCompatActivity implements MyListener {
     private SharedPreferences preferences = App.context.getSharedPreferences(App.SHARED_PREFERENCES_NAME, App.context.MODE_PRIVATE);
     private String userTel = preferences.getString("userTel", "");
     private String userPwd = preferences.getString("userPwd", "");
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity implements MyListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userModel = new UserModel(this);
-        if (TextUtils.isEmpty(userTel)) {
+        Log.v("MianActivity", userTel);
+        if (!TextUtils.isEmpty(userTel)) {
             User user = new User();
             user.setUserTel(userTel);
             user.setUserPwd(userPwd);

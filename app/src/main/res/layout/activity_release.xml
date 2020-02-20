@@ -52,9 +52,18 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/text_GPS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:text="地址："
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:text="证明提交"
         android:textSize="20sp" />
 

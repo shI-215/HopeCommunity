@@ -106,4 +106,28 @@ public class UserModel {
             }
         });
     }
+
+    public void register(User user, final MyListener myListener) {
+        OkHttpUtils.postString().url(App.USER_REGISTER).content(new Gson().toJson(user))
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build().execute(new MyCallBack() {
+            @Override
+            public void onResponse(Msg msg, int id) {
+                if (msg.getCode() == 200) {
+                    myListener.onSuccess(msg.getData());
+                } else {
+                    myListener.onFaile(msg.getData());
+                }
+            }
+        });
+    }
+
+    public void remove() {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("userName");
+        editor.remove("userSex");
+        editor.remove("userBirthday");
+        editor.remove("userAddress");
+        editor.commit();
+    }
 }
