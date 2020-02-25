@@ -24,4 +24,10 @@ public class App extends Application {
     public static String USER_ALTERPHONE = HOPE_URL + "/user/alterPhone";
     public static String USER_ALTERUSER = HOPE_URL + "/user/alterUser";
 
+    //file
+    public static String FILE_UPLOAD = HOPE_URL + "/file/upload";
+    public static String FILE_UPLOADMORE = HOPE_URL + "/file/uploadMore";
+
+    //active
+    public static String ACTIVE_RELEASE = HOPE_URL + "/active/release";
 }

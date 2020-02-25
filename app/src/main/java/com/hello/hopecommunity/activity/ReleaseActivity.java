@@ -33,6 +33,10 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.hello.hopecommunity.R;
+import com.hello.hopecommunity.bean.Active;
+import com.hello.hopecommunity.model.ActiveModel;
+import com.hello.hopecommunity.ui.FileListener;
+import com.hello.hopecommunity.ui.MyListener;
 import com.hello.hopecommunity.util.GlideLoader;
 import com.jaiky.imagespickers.ImageConfig;
 import com.jaiky.imagespickers.ImageSelector;
@@ -41,12 +45,17 @@ import com.jaiky.imagespickers.ImageSelectorActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReleaseActivity extends AppCompatActivity implements View.OnClickListener {
+public class ReleaseActivity extends AppCompatActivity implements View.OnClickListener, MyListener, FileListener {
     private LocationClient mLocationClient;
 
     private ArrayList<String> path = new ArrayList<>();
     public static final int REQUEST_CODE = 123;
     private ImageConfig imageConfig;
+
+    private ActiveModel activeModel;
+    private int FILE_TYPE = 0;
+    private boolean COVER_IMAGE = false;
+    private boolean PROVE_IMAGE = false;
 
     private LinearLayout ll_cover;
     private EditText edt_title;
@@ -68,6 +77,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        activeModel = new ActiveModel();
     }
 
     @Override
@@ -84,7 +94,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
                 this.finish();
                 return true;
             case R.id.submit_item:
-                Toast.makeText(ReleaseActivity.this, "提交", Toast.LENGTH_LONG).show();
+                submit();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -95,19 +105,39 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
         // validate
         String title = edt_title.getText().toString().trim();
         if (TextUtils.isEmpty(title)) {
-            Toast.makeText(this, "title不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "标题不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String describe = edt_describe.getText().toString().trim();
         if (TextUtils.isEmpty(describe)) {
-            Toast.makeText(this, "describe不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "描述不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String str = text_GPS.getText().toString().trim();
+        int index = str.indexOf("：");
+        String address = str.substring(index + 1);
+        Log.v("------------> ", address);
+        if (TextUtils.isEmpty(address)) {
+            Toast.makeText(this, "位置为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (COVER_IMAGE == false) {
+            Toast.makeText(this, "请先添加图片", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (PROVE_IMAGE == false) {
+            Toast.makeText(this, "请先添加证明图片", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // TODO validate success, do something
-
-
+        Active active = new Active();
+        active.setActName(title);
+        active.setActDescribe(describe);
+        active.setActAddress(address);
+        activeModel.release(active, this);
     }
 
     @Override
@@ -135,6 +165,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
                 .requestCode(REQUEST_CODE)
                 .build();
         ImageSelector.open(ReleaseActivity.this, imageConfig);
+        FILE_TYPE = 1;
     }
 
     private void getProve() {
@@ -148,6 +179,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
                 .requestCode(REQUEST_CODE)
                 .build();
         ImageSelector.open(ReleaseActivity.this, imageConfig);
+        FILE_TYPE = 2;
     }
 
     @Override
@@ -158,7 +190,38 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
             Log.v("picyure", pathList.toString());
             path.clear();
             path.addAll(pathList);
+            if (FILE_TYPE == 1) {
+                activeModel.upLoadImage(path, this);
+            } else if (FILE_TYPE == 2) {
+                activeModel.upLoadImageMore(path, this);
+            }
         }
+    }
+
+    @Override
+    public void onSuccess(Object object) {
+        Toast.makeText(getApplicationContext(), object.toString(), Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onFaile(Object object) {
+        Toast.makeText(getApplicationContext(), object.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUpload(Object o) {
+        if (FILE_TYPE == 1) {
+            COVER_IMAGE = true;
+        } else if (FILE_TYPE == 2) {
+            PROVE_IMAGE = true;
+        }
+        Toast.makeText(getApplicationContext(), o.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onError(Object o) {
+        Toast.makeText(getApplicationContext(), o.toString(), Toast.LENGTH_SHORT).show();
     }
 
     public class MyLocationListener implements BDLocationListener {
