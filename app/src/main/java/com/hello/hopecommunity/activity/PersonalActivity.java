@@ -18,8 +18,8 @@ import com.hello.hopecommunity.App;
 import com.hello.hopecommunity.R;
 import com.hello.hopecommunity.adapter.RecycleAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PersonalActivity extends AppCompatActivity implements View.OnClickListener {
     private SharedPreferences preferences = App.context.getSharedPreferences(App.SHARED_PREFERENCES_NAME, App.context.MODE_PRIVATE);
@@ -28,7 +28,7 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
     private RecycleAdapter recycleAdapter;
     private Context context;
 
-    private List<String> list;
+    private List<Map<String, Object>> list;
     private ImageView image_background;
     private ImageView btn_back;
     private TextView text_user;
@@ -68,11 +68,11 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initData() {
-        list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(i + "人");
-        }
-        recycleAdapter = new RecycleAdapter(list);
+//        list = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            list.add(i + "人");
+//        }
+        recycleAdapter = new RecycleAdapter(list, getApplicationContext());
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
         recycler_view.setLayoutManager(staggeredGridLayoutManager);

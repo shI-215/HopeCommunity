@@ -29,5 +29,9 @@ public class App extends Application {
     public static String FILE_UPLOADMORE = HOPE_URL + "/file/uploadMore";
 
     //active
+    public static String ACTIVE_LOOKALL = HOPE_URL + "/active/lookAll";
     public static String ACTIVE_RELEASE = HOPE_URL + "/active/release";
+
+    //image
+    public static String IMAGE_LOOKALLIMAGE = HOPE_URL + "/image/lookAllImage";
 }

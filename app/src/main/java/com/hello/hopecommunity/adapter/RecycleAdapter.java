@@ -1,5 +1,7 @@
 package com.hello.hopecommunity.adapter;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +11,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.hello.hopecommunity.R;
 
 import java.util.List;
+import java.util.Map;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
-    private List<String> list;
+    private List<Map<String, Object>> list;
+    private Context context;
 
-    public RecycleAdapter(List<String> list) {
+    public RecycleAdapter(List<Map<String, Object>> list, Context context) {
         this.list = list;
+        this.context = context;
     }
 
     @NonNull
@@ -29,20 +35,30 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecycleAdapter.ViewHolder holder, int position) {
-        holder.card_image_item.setImageResource(R.drawable.background);
+//        holder.card_image_item.setImageResource(R.drawable.background);
+//        String url = "http://192.168.43.196:8080/Hope/" + list.get(position).get("image").toString();
+        String url = "https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1582692128&di=e8fa3d55bfaa6bd8b92e00cfa8d4cfc3&src=http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg";
+        Log.v("URL------->>>>>>", url);
+        Glide.with(context)
+                .load(url)
+                .thumbnail(0.2f)
+                .placeholder(R.drawable.ic_image_loading)
+                .error(R.drawable.ic_image_failed)
+                .into(holder.card_image_item);
         holder.card_image_item.setTag(position);
-        holder.text_people.setText(list.get(position));
+        holder.text_title_item.setText(list.get(position).get("title").toString());
+        Log.v("text_title_item------->", list.get(position).get("title").toString());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView card_image_item;
-        public TextView text_people;
+        public TextView text_title_item;
 
         public ViewHolder(View view) {
             super(view);
             card_image_item = view.findViewById(R.id.card_image_item);
             card_image_item.setOnClickListener(this);
-            text_people = view.findViewById(R.id.text_people);
+            text_title_item = view.findViewById(R.id.text_title_item);
         }
 
         @Override

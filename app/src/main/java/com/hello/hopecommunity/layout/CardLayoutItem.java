@@ -3,7 +3,6 @@ package com.hello.hopecommunity.layout;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +29,6 @@ public class CardLayoutItem extends CardView {
 
     private void init() {
         card_image_item = findViewById(R.id.card_image_item);
-        text_people = findViewById(R.id.text_people);
+        text_people = findViewById(R.id.text_title_item);
     }
 }
