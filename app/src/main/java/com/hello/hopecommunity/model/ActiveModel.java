@@ -79,4 +79,21 @@ public class ActiveModel {
             }
         });
     }
+
+    public void look(int actId, final MyListener myListener) {
+        OkHttpUtils.get()
+                .url(App.ACTIVE_LOOK)
+                .addParams("actId", actId + "")
+                .build()
+                .execute(new MyCallBack() {
+                    @Override
+                    public void onResponse(Msg response, int id) {
+                        if (response.getCode() == 200) {
+                            myListener.onSuccess(response.getData());
+                        } else {
+                            myListener.onFaile(response.getData());
+                        }
+                    }
+                });
+    }
 }

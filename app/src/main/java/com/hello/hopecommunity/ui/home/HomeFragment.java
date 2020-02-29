@@ -43,7 +43,6 @@ public class HomeFragment extends Fragment implements ListListener {
         banner_home = root.findViewById(R.id.banner_home);
         imageModel = new ImageModel();
         imageModel.getAll(this);
-//        initData();
         List images = new ArrayList();
         images.add(R.drawable.one);
         images.add(R.drawable.two);
@@ -66,8 +65,11 @@ public class HomeFragment extends Fragment implements ListListener {
             public void onItemClick(View v, RecycleAdapter.ViewName viewName, int position) {
                 switch (v.getId()) {
                     case R.id.card_image_item:
-                        Toast.makeText(getContext(), (position + 1) + "", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getContext(), DetailsActivity.class));
+                        Toast.makeText(getContext(), list.get(position).get("id") + "", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent();
+                        intent.putExtra("actId", (Integer) list.get(position).get("id"));
+                        intent.setClass(getContext(), DetailsActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }
@@ -85,6 +87,7 @@ public class HomeFragment extends Fragment implements ListListener {
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<>();
             Image image = (Image) list.get(i);
+            map.put("id", image.getActive().getActId());
             map.put("title", image.getActive().getActName());
             map.put("image", image.getImgPath());
             this.list.add(map);
@@ -95,6 +98,6 @@ public class HomeFragment extends Fragment implements ListListener {
 
     @Override
     public void onFaile(Object o) {
-
+        Toast.makeText(getContext(), o.toString(), Toast.LENGTH_LONG).show();
     }
 }

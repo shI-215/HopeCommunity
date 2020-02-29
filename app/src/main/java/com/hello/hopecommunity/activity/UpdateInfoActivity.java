@@ -51,9 +51,9 @@ public class UpdateInfoActivity extends AppCompatActivity implements View.OnClic
 
     private EditText edt_name;
     private RadioButton radio_man;
+    private RadioButton radio_woman;
     private TextView birthday;
     private TextView city;
-    private RadioButton radio_woman;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,6 +119,7 @@ public class UpdateInfoActivity extends AppCompatActivity implements View.OnClic
         edt_name.setText(userName);
         edt_name.setSelection(edt_name.getText().length());
         radio_man = (RadioButton) findViewById(R.id.radio_man);
+        radio_woman = (RadioButton) findViewById(R.id.radio_woman);
         if (TextUtils.equals(userSex, "男")) {
             radio_man.setChecked(true);
         } else {
@@ -186,7 +187,7 @@ public class UpdateInfoActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onSuccess(Object object) {
         MainActivity.activity.finish();
-//        userModel.remove();
+        userModel.remove();
         finish();
         startActivity(new Intent(context, MainActivity.class));
         Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show();

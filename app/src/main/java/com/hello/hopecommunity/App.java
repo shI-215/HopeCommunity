@@ -12,26 +12,28 @@ public class App extends Application {
         context = this;
     }
 
-    public static String MOB_COUNTRY = "+86";
+    public static final String MOB_COUNTRY = "+86";
 
-    public static String SHARED_PREFERENCES_NAME = "Hope";
+    public static final String SHARED_PREFERENCES_NAME = "Hope";
 
-    private static String HOPE_URL = "http://192.168.43.196:8080/Hope";
-    //    user
-    public static String USER_LOGIN = HOPE_URL + "/user/login";
-    public static String USER_REGISTER = HOPE_URL + "/user/register";
-    public static String USER_FIND = HOPE_URL + "/user/find";
-    public static String USER_ALTERPHONE = HOPE_URL + "/user/alterPhone";
-    public static String USER_ALTERUSER = HOPE_URL + "/user/alterUser";
+    public static final String HOPE_URL = "http://192.168.43.196:8080/Hope";
+
+    //user
+    public static final String USER_LOGIN = HOPE_URL + "/user/login";
+    public static final String USER_REGISTER = HOPE_URL + "/user/register";
+    public static final String USER_FIND = HOPE_URL + "/user/find";
+    public static final String USER_ALTERPHONE = HOPE_URL + "/user/alterPhone";
+    public static final String USER_ALTERUSER = HOPE_URL + "/user/alterUser";
 
     //file
-    public static String FILE_UPLOAD = HOPE_URL + "/file/upload";
-    public static String FILE_UPLOADMORE = HOPE_URL + "/file/uploadMore";
+    public static final String FILE_UPLOAD = HOPE_URL + "/file/upload";
+    public static final String FILE_UPLOADMORE = HOPE_URL + "/file/uploadMore";
 
     //active
-    public static String ACTIVE_LOOKALL = HOPE_URL + "/active/lookAll";
-    public static String ACTIVE_RELEASE = HOPE_URL + "/active/release";
+    public static final String ACTIVE_RELEASE = HOPE_URL + "/active/release";
+    public static final String ACTIVE_LOOK = HOPE_URL + "/active/look";
 
     //image
-    public static String IMAGE_LOOKALLIMAGE = HOPE_URL + "/image/lookAllImage";
+    public static final String IMAGE_LOOKALLIMAGE = HOPE_URL + "/image/lookAllImage";
+    public static final String IMAGE_LOOKMYIMAGE = HOPE_URL + "/image/lookMyImage";
 }

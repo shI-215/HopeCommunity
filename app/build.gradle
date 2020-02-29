@@ -55,6 +55,8 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     //图片选择
     implementation 'com.jaikydota.imagespickers:imagespickers:1.0.6'
+    //圆形图片设置
+    implementation 'com.github.Othershe:NiceImageView:1.0.0'
 }
 
 MobSDK {

@@ -32,4 +32,24 @@ public class ImageModel {
             }
         });
     }
+
+    public void getMyImage(int userId, final ListListener listListener) {
+        OkHttpUtils.get().url(App.IMAGE_LOOKMYIMAGE)
+                .addParams("uId", userId + "")
+                .build()
+                .execute(new MyCallBack() {
+                    @Override
+                    public void onResponse(Msg response, int id) {
+                        if (response.getCode() == 200) {
+                            Type type = new TypeToken<List<Image>>() {
+                            }.getType();
+                            List<Image> list = new Gson().fromJson(response.getData(), type);
+                            Log.v("List---->", list.toString());
+                            listListener.onSuccess(list);
+                        } else {
+                            listListener.onFaile(response.getData());
+                        }
+                    }
+                });
+    }
 }

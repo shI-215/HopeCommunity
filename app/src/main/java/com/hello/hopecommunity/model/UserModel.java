@@ -36,6 +36,7 @@ public class UserModel {
                     editor.putInt("userId", user1.getUserId());
                     editor.putString("userName", user1.getUserName());
                     editor.putString("userTel", user1.getUserTel());
+                    editor.putString("userPwd", user1.getUserPwd());
                     editor.putString("userSex", user1.getUserSex());
                     editor.putString("userBirthday", user1.getUserBirthday());
                     editor.putString("userAddress", user1.getUserAddress());

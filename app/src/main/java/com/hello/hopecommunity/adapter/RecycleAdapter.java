@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.hello.hopecommunity.App;
 import com.hello.hopecommunity.R;
 
 import java.util.List;
@@ -35,9 +36,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecycleAdapter.ViewHolder holder, int position) {
-//        holder.card_image_item.setImageResource(R.drawable.background);
-//        String url = "http://192.168.43.196:8080/Hope/" + list.get(position).get("image").toString();
-        String url = "https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1582692128&di=e8fa3d55bfaa6bd8b92e00cfa8d4cfc3&src=http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg";
+        String url = App.HOPE_URL + list.get(position).get("image").toString();
         Log.v("URL------->>>>>>", url);
         Glide.with(context)
                 .load(url)

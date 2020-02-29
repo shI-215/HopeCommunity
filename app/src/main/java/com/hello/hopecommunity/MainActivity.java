@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements MyListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userModel = new UserModel(this);
-        Log.v("MianActivity", userTel);
-        if (!TextUtils.isEmpty(userTel)) {
+        Log.v("MianActivity", userTel + "<----->" + userPwd);
+        if (!TextUtils.isEmpty(userTel) && !TextUtils.isEmpty(userPwd)) {
             User user = new User();
             user.setUserTel(userTel);
             user.setUserPwd(userPwd);
