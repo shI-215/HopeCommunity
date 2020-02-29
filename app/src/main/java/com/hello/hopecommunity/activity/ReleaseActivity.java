@@ -159,7 +159,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
                 .titleSubmitTextColor(getResources().getColor(R.color.white))
                 .titleTextColor(getResources().getColor(R.color.white))
                 .singleSelect()      // 开启单选   （默认为多选）
-                .crop(1, 1, 700, 500)        // 裁剪 (只有单选可裁剪)
+//                .crop(1, 1, 700, 500)        // 裁剪 (只有单选可裁剪)
                 .showCamera()        // 开启拍照功能 （默认关闭）
                 .setContainer(ll_cover, 1, true)    // 设置显示容器和删除按钮
                 .requestCode(REQUEST_CODE)
@@ -175,7 +175,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
                 .titleSubmitTextColor(getResources().getColor(R.color.white))
                 .titleTextColor(getResources().getColor(R.color.white))
                 .singleSelect()
-                .crop(1, 1, 500, 500)
+//                .crop(1, 1, 500, 500)
                 .showCamera()        // 开启拍照功能 （默认关闭）
                 .setContainer(ll_prove, 2, true)    // 设置显示容器和删除按钮
                 .requestCode(REQUEST_CODE)

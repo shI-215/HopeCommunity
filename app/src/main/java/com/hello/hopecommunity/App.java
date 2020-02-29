@@ -35,5 +35,6 @@ public class App extends Application {
 
     //image
     public static final String IMAGE_LOOKALLIMAGE = HOPE_URL + "/image/lookAllImage";
+    public static final String IMAGE_LOOKALLMYIMAGE = HOPE_URL + "/image/lookAllMyImage";
     public static final String IMAGE_LOOKMYIMAGE = HOPE_URL + "/image/lookMyImage";
 }

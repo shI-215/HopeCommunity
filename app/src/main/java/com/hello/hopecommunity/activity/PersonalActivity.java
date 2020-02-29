@@ -45,6 +45,8 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_personal);
         AppBarLayout appBarLayout = findViewById(R.id.appBar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -57,12 +59,10 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         });
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal);
         context = this;
         if (userId != 0) {
             imageModel = new ImageModel();
-            imageModel.getMyImage(userId, this);
+            imageModel.getAllMyImage(userId, this);
         } else {
             initData();
         }

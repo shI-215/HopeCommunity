@@ -101,7 +101,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
             public void onItemClick(View v, RecycleAdapter.ViewName viewName, int position) {
                 switch (v.getId()) {
                     case R.id.card_image_item:
-                        Toast.makeText(getContext(), list.get(position).get("id") + "", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent();
                         intent.putExtra("actId", (Integer) list.get(position).get("id"));
                         intent.setClass(getContext(), DetailsActivity.class);
