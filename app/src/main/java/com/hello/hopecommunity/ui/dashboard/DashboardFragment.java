@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DashboardFragment extends Fragment implements View.OnClickListener, ListListener {
+public class DashboardFragment extends Fragment implements ListListener {
     private SharedPreferences preferences = App.context.getSharedPreferences(App.SHARED_PREFERENCES_NAME, App.context.MODE_PRIVATE);
     private int userId = preferences.getInt("userId", 0);
 
@@ -51,19 +51,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
             initData();
         }
         return root;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.image_add:
-                if (userId == 0) {
-                    Toast.makeText(getContext(), "请先登录之后再操作", Toast.LENGTH_LONG).show();
-                } else {
-                    startActivity(new Intent(getContext(), ReleaseActivity.class));
-                }
-                break;
-        }
     }
 
     @Override
@@ -90,7 +77,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
         recycleAdapter = new RecycleAdapter(list, getActivity());
         recycler_view = root.findViewById(R.id.recycler_view);
         image_add = root.findViewById(R.id.image_add);
-        image_add.setOnClickListener(this);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
         recycler_view.setLayoutManager(staggeredGridLayoutManager);
@@ -112,6 +98,17 @@ public class DashboardFragment extends Fragment implements View.OnClickListener,
             @Override
             public void onItemLongClick(View v) {
 
+            }
+        });
+
+        image_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userId != 0) {
+                    startActivity(new Intent(getContext(), ReleaseActivity.class));
+                } else {
+                    Toast.makeText(getContext(), "请先登录之后再操作", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

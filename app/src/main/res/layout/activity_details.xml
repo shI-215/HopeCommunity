@@ -66,5 +66,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:src="@drawable/background" />
+
+        <Button
+            android:id="@+id/btn_join"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="参加活动" />
     </LinearLayout>
 </ScrollView>

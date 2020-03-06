@@ -9,6 +9,7 @@ import com.hello.hopecommunity.bean.Msg;
 import com.hello.hopecommunity.bean.User;
 import com.hello.hopecommunity.callback.MyCallBack;
 import com.hello.hopecommunity.ui.FileListener;
+import com.hello.hopecommunity.ui.JoinListener;
 import com.hello.hopecommunity.ui.MyListener;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -80,9 +81,10 @@ public class ActiveModel {
         });
     }
 
-    public void look(int actId, final MyListener myListener) {
+    public void look(int userId, int actId, final MyListener myListener) {
         OkHttpUtils.get()
                 .url(App.ACTIVE_LOOK)
+                .addParams("userId", userId + "")
                 .addParams("actId", actId + "")
                 .build()
                 .execute(new MyCallBack() {
@@ -92,6 +94,24 @@ public class ActiveModel {
                             myListener.onSuccess(response.getData());
                         } else {
                             myListener.onFaile(response.getData());
+                        }
+                    }
+                });
+    }
+
+    public void join(int userId, int actId, final JoinListener joinListener) {
+        OkHttpUtils.post()
+                .url(App.ACTIVE_JOIN)
+                .addParams("userId", userId + "")
+                .addParams("actId", actId + "")
+                .build()
+                .execute(new MyCallBack() {
+                    @Override
+                    public void onResponse(Msg response, int id) {
+                        if (response.getCode() == 200) {
+                            joinListener.onSuccess();
+                        } else {
+                            joinListener.onFaile();
                         }
                     }
                 });

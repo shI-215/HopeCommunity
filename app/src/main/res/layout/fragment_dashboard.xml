@@ -15,5 +15,6 @@
         android:layout_alignBottom="@id/recycler_view"
         android:layout_centerHorizontal="true"
         android:layout_margin="5dp"
+        android:clickable="true"
         android:src="@drawable/ic_action_plus" />
 </RelativeLayout>

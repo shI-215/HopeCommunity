@@ -17,13 +17,16 @@ import okhttp3.MediaType;
 public class UserModel {
     private Context context;
     private SharedPreferences preferences;
+    private int userId;
 
     public UserModel(Context context) {
         this.context = context;
         preferences = context.getSharedPreferences(App.SHARED_PREFERENCES_NAME, context.MODE_PRIVATE);
+        userId = preferences.getInt("userId", 0);
     }
 
     public void login(final User user, final MyListener myListener) {
+        user.setRegistrationID(App.registrationID);
         Log.v("Login", user.toString());
         OkHttpUtils.postString().url(App.USER_LOGIN).content(new Gson().toJson(user))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -56,10 +59,23 @@ public class UserModel {
     }
 
     public void loginOut(final MyListener myListener) {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.commit();
-        myListener.onSuccess("退出登录");
+        User user = new User();
+        user.setUserId(userId);
+        OkHttpUtils.postString().url(App.USER_LOGIN_OUT).content(new Gson().toJson(user))
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build().execute(new MyCallBack() {
+            @Override
+            public void onResponse(Msg msg, int id) {
+                if (msg.getCode() == 200) {
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear();
+                    editor.commit();
+                    myListener.onSuccess("退出登录");
+                } else {
+                    myListener.onFaile(msg.getData());
+                }
+            }
+        });
     }
 
     public void alterUser(User user, final MyListener myListener) {

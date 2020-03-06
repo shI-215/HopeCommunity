@@ -1,9 +1,13 @@
 package com.hello.hopecommunity.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,13 +24,17 @@ import com.hello.hopecommunity.bean.Active;
 import com.hello.hopecommunity.bean.HopeMap;
 import com.hello.hopecommunity.bean.Image;
 import com.hello.hopecommunity.model.ActiveModel;
+import com.hello.hopecommunity.ui.JoinListener;
 import com.hello.hopecommunity.ui.MyListener;
 
 import java.util.List;
 
-public class DetailsActivity extends AppCompatActivity implements MyListener {
+public class DetailsActivity extends AppCompatActivity implements MyListener, JoinListener, View.OnClickListener {
 
+    private SharedPreferences preferences = App.context.getSharedPreferences(App.SHARED_PREFERENCES_NAME, App.context.MODE_PRIVATE);
+    private int userId = preferences.getInt("userId", 0);
     private ActiveModel activeModel;
+    private int actId;
     private Context context;
 
     private ImageView image_title;
@@ -35,6 +43,7 @@ public class DetailsActivity extends AppCompatActivity implements MyListener {
     private TextView text_describe;
     private ImageView image_picture;
     private TextView text_location;
+    private Button btn_join;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +56,8 @@ public class DetailsActivity extends AppCompatActivity implements MyListener {
         setContentView(R.layout.activity_details);
         context = this;
         activeModel = new ActiveModel();
-        activeModel.look(getIntent().getIntExtra("actId", 0), this);
+        actId = getIntent().getIntExtra("actId", 0);
+        activeModel.look(userId, actId, this);
         initView();
     }
 
@@ -68,6 +78,8 @@ public class DetailsActivity extends AppCompatActivity implements MyListener {
         text_describe = (TextView) findViewById(R.id.text_describe);
         image_picture = (ImageView) findViewById(R.id.image_picture);
         text_location = (TextView) findViewById(R.id.text_location);
+        btn_join = (Button) findViewById(R.id.btn_join);
+        btn_join.setOnClickListener(this);
     }
 
     @Override
@@ -100,10 +112,50 @@ public class DetailsActivity extends AppCompatActivity implements MyListener {
                         .into(image_picture);
             }
         }
+        if (active.getUser().getUserId() == userId) {
+            btn_join.setVisibility(View.GONE);
+        } else {
+            btn_join.setVisibility(View.VISIBLE);
+        }
+        if (userId == 0) {
+            btn_join.setClickable(false);
+            btn_join.setText("请先登录");
+        } else {
+            if (hopeMap.isJoin()) {
+                btn_join.setClickable(false);
+                btn_join.setText("活动已报名");
+            } else {
+                btn_join.setClickable(true);
+                btn_join.setText("报名活动");
+            }
+        }
     }
 
     @Override
     public void onFaile(Object o) {
         Toast.makeText(getApplicationContext(), o.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_join:
+                activeModel.join(userId, actId, this);
+                break;
+        }
+    }
+
+    @Override
+    public void onSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra("actId", actId);
+        intent.setClass(context, DetailsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onFaile() {
+        Toast.makeText(context, "报名失败", Toast.LENGTH_LONG).show();
     }
 }

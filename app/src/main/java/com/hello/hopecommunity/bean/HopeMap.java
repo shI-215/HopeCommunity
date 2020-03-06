@@ -13,6 +13,16 @@ public class HopeMap {
 
     private Active active;
     private List<Image> images;
+    private boolean isJoin;
+
+    @Override
+    public String toString() {
+        return "HopeMap{" +
+                "active=" + active +
+                ", images=" + images +
+                ", isJoin=" + isJoin +
+                '}';
+    }
 
     public Active getActive() {
         return active;
@@ -28,5 +38,13 @@ public class HopeMap {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public boolean isJoin() {
+        return isJoin;
+    }
+
+    public void setJoin(boolean join) {
+        isJoin = join;
     }
 }

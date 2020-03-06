@@ -23,6 +23,7 @@ public class User {
     private String userPwd;
     private String userSex;
     private String userTel;
+    private String registrationID;
 
     @Override
     public String toString() {
@@ -36,6 +37,7 @@ public class User {
                 ", userPwd='" + userPwd + '\'' +
                 ", userSex='" + userSex + '\'' +
                 ", userTel='" + userTel + '\'' +
+                ", registrationID='" + registrationID + '\'' +
                 '}';
     }
 
@@ -109,5 +111,13 @@ public class User {
 
     public void setUserTel(String userTel) {
         this.userTel = userTel;
+    }
+
+    public String getRegistrationID() {
+        return registrationID;
+    }
+
+    public void setRegistrationID(String registrationID) {
+        this.registrationID = registrationID;
     }
 }
